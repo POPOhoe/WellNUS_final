@@ -1,6 +1,6 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import { ScrollView, StyleSheet } from "react-native";
+import { ScrollView, StyleSheet, TouchableOpacity } from "react-native";
 import { View, Image } from "react-native";
 import { Text } from "../components/TextComponents";
 import { CourseScreenComponent } from "../components/CourseScreenComponent";
@@ -50,12 +50,13 @@ export const CourseScreen = ({ navigation }) => {
             mindfulness!
           </Text>
           <Spacer location="top" size="large" />
-
-          <CourseScreenComponent
-            photo="https://cdn.dribbble.com/users/1787323/screenshots/15130806/media/f84745b944add9b99647d395d3b2f7f0.png?compress=1&resize=1600x1200"
-            title="Day 1"
-            description="10 minutes"
-          />
+          <TouchableOpacity onPress={() => navigation.navigate("Player")}>
+            <CourseScreenComponent
+              photo="https://cdn.dribbble.com/users/1787323/screenshots/15130806/media/f84745b944add9b99647d395d3b2f7f0.png?compress=1&resize=1600x1200"
+              title="Day 1"
+              description="10 minutes"
+            />
+          </TouchableOpacity>
           <Spacer position="top" size="large" />
           <CourseScreenComponent
             photo="https://cdn.dribbble.com/users/1787323/screenshots/15130806/media/3553da3932c15f187c51d5d35f1e4c80.png?compress=1&resize=1600x1200"

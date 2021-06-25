@@ -12,12 +12,14 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { SafeArea } from "./src/components/utility/Safe-Area";
 
 import { MeditationScreenPart2 } from "./src/screens/MeditationScreenPart2";
+import { Player2 } from "./Player2";
 import { Player } from "./src/components/Player";
 
 import { CourseScreen } from "./src/components/CourseScreen";
 import { OnboardingScreen } from "./src/screens/OnBoardingScreen";
 
 import LoginScreen from "./src/screens/LoginScreen";
+import MoodTracker from "./src/screens/MoodTracker";
 
 import {
   Ionicons,
@@ -28,7 +30,7 @@ import {
 
 const Tab = createBottomTabNavigator();
 
-const ForumScreen = () => <Text>Forum</Text>;
+const ForumScreen = () => <Text>Soon to be implemented in milestone 3! 🙂</Text>;
 const MoodTrackingScreen = () => <Text>Mood tracking</Text>;
 
 import {
@@ -101,8 +103,8 @@ export default function App() {
             >
               <Tab.Screen name="Home" component={Homescreen} />
               <Tab.Screen name="Meditation" component={MeditationScreenPart2} />
-              <Tab.Screen name="Forum" component={Player} />
-              <Tab.Screen name="MoodTracking" component={OnboardingScreen} />
+              <Tab.Screen name="Forum" component={ForumScreen} />
+              <Tab.Screen name="MoodTracking" component={MoodTracker} />
             </Tab.Navigator>
           </NavigationContainer>
         </SafeArea>

@@ -1,5 +1,5 @@
 import React from "react";
-import { ScrollView, Touchable, View } from "react-native";
+import { ScrollView, Touchable, View, Linking } from "react-native";
 import { HomeScreenComponents } from "../components/HomeScreenComponents";
 import { HomeScreenComponents2 } from "../components/HomeScreenComponents2";
 import { CardArea, ScrollingList } from "../components/styles/HomeScreenStyle";
@@ -77,9 +77,7 @@ export const Homescreen = () => {
             photo="https://www.nus.edu.sg/uhc/images/default-source/default-album/wmhdforstaffportal.jpg?sfvrsn=1b9b6b77_0"
             title="Talks and Workshops for World Mental Health Day"
             description="In Singapore, 1 in 10 adults suffer from a mental health disorder. Those afflicted are often prevented from seeking help because of stigma attached to mental health concerns."
-            onPress={() =>
-              "www.nus.edu.sg/uhc/activities/world-mental-health-day"
-            }
+            onPress="https://www.nus.edu.sg/uhc/activities/world-mental-health-day"
           />
         </CardArea>
       </ScrollView>

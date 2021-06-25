@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { StyleSheet, View, TouchableOpacity, Image } from "react-native";
 import { Entypo, MaterialIcons } from "@expo/vector-icons";
-import { Audio } from "expo-av";
+import { Audio, Video } from "expo-av";
 import { Text } from "../components/TextComponents";
+import SeekBar from "../components/SeekBar";
 import Slider from "@react-native-community/slider";
 import { windowWidth, windowHeight } from "../infrastructure/theme/dimensions";
 
@@ -12,6 +13,30 @@ const Playlist = [
     author: "WellNUS",
     source: "",
     uri: require("../../MeditationTracks/Basics/Day1.mp3"),
+    imageSource:
+      "https://cdn.dribbble.com/users/1787323/screenshots/15491880/media/b7743c488f2f89dd461ad8955405fa29.png?compress=1&resize=1600x1200",
+  },
+  {
+    title: "Basics of Meditation - Day 2",
+    author: "WellNUS",
+    source: "",
+    uri: require("../../MeditationTracks/Basics/Day2.mp3"),
+    imageSource:
+      "https://cdn.dribbble.com/users/1787323/screenshots/15491880/media/b7743c488f2f89dd461ad8955405fa29.png?compress=1&resize=1600x1200",
+  },
+  {
+    title: "Basics of Meditation - Day 2",
+    author: "WellNUS",
+    source: "",
+    uri: require("../../MeditationTracks/Basics/Day2.mp3"),
+    imageSource:
+      "https://cdn.dribbble.com/users/1787323/screenshots/15491880/media/b7743c488f2f89dd461ad8955405fa29.png?compress=1&resize=1600x1200",
+  },
+  {
+    title: "Basics of Meditation - Day 2",
+    author: "WellNUS",
+    source: "",
+    uri: require("../../MeditationTracks/Basics/Day2.mp3"),
     imageSource:
       "https://cdn.dribbble.com/users/1787323/screenshots/15491880/media/b7743c488f2f89dd461ad8955405fa29.png?compress=1&resize=1600x1200",
   },
@@ -150,17 +175,12 @@ export class Player extends Component {
           }}
         />
         <Slider
-          style={{ width: windowWidth * (6 / 7), height: 40 }}
-          minimumValue={0}
-          maximumValue={1}
-        />
-        {/* <Slider
           style={{ width: 200, height: 40 }}
           minimumValue={0}
           maximumValue={1}
           minimumTrackTintColor="#03A89E"
           maximumTrackTintColor="#000000"
-        /> */}
+        />
         <View style={styles.controls}>
           <TouchableOpacity
             style={styles.control}
