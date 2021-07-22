@@ -21,7 +21,7 @@ import firebase from "./../../firebase/fire";
 const MoodTracker = () => {
   const [items, setItems] = useState({});
 
-  const [showCalendar, setShowCalendar] = useState(true);
+  const [showCalendar, setShowCalendar] = useState(false);
 
   const [showInput, setShowInput] = useState(false);
 

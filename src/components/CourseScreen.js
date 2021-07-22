@@ -2,20 +2,16 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { ScrollView, StyleSheet, TouchableOpacity } from "react-native";
 import { View, Image } from "react-native";
-import { Text } from "../components/TextComponents";
-import { CourseScreenComponent } from "../components/CourseScreenComponent";
+import { Text } from "./TextComponents";
+import { CourseScreenComponent } from "./CourseScreenComponent";
 import { windowWidth, windowHeight } from "../infrastructure/theme/dimensions";
-import { Spacer } from "../components/spacer.component";
+import { Spacer } from "./spacer.component";
 import { AntDesign } from "@expo/vector-icons";
+import { Player2 } from "../../Players/Player2";
 
-const tracks = [
-  {
-    title: "Day 1",
-    photo:
-      "https://cdn.dribbble.com/users/1787323/screenshots/15130806/media/54a4346b31d77a931ef7d160fe2098bc.png?compress=1&resize=1600x1200",
-  },
-  {},
-];
+const Basics = ({ index }) => {
+  return <Player2 index={index} />;
+};
 
 export const CourseScreen = ({ navigation }) => {
   return (
@@ -50,7 +46,9 @@ export const CourseScreen = ({ navigation }) => {
             mindfulness!
           </Text>
           <Spacer location="top" size="large" />
-          <TouchableOpacity onPress={() => navigation.navigate("Player")}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("Basics", { index: 0 })}
+          >
             <CourseScreenComponent
               photo="https://cdn.dribbble.com/users/1787323/screenshots/15130806/media/f84745b944add9b99647d395d3b2f7f0.png?compress=1&resize=1600x1200"
               title="Day 1"
@@ -58,29 +56,45 @@ export const CourseScreen = ({ navigation }) => {
             />
           </TouchableOpacity>
           <Spacer position="top" size="large" />
-          <CourseScreenComponent
-            photo="https://cdn.dribbble.com/users/1787323/screenshots/15130806/media/3553da3932c15f187c51d5d35f1e4c80.png?compress=1&resize=1600x1200"
-            title="Day 2"
-            description="10 minutes"
-          />
+          <TouchableOpacity
+            onPress={() => navigation.navigate("Basics", { index: 1 })}
+          >
+            <CourseScreenComponent
+              photo="https://cdn.dribbble.com/users/1787323/screenshots/15130806/media/3553da3932c15f187c51d5d35f1e4c80.png?compress=1&resize=1600x1200"
+              title="Day 2"
+              description="10 minutes"
+            />
+          </TouchableOpacity>
           <Spacer position="top" size="large" />
-          <CourseScreenComponent
-            photo="https://cdn.dribbble.com/users/1787323/screenshots/15130806/media/ccfd2b63c1ebbcdaf72c03665fe653f0.png?compress=1&resize=1600x1200"
-            title="Day 3"
-            description="10 minutes"
-          />
+          <TouchableOpacity
+            onPress={() => navigation.navigate("Basics", { index: 2 })}
+          >
+            <CourseScreenComponent
+              photo="https://cdn.dribbble.com/users/1787323/screenshots/15130806/media/ccfd2b63c1ebbcdaf72c03665fe653f0.png?compress=1&resize=1600x1200"
+              title="Day 3"
+              description="10 minutes"
+            />
+          </TouchableOpacity>
           <Spacer position="top" size="large" />
-          <CourseScreenComponent
-            photo="https://cdn.dribbble.com/users/1787323/screenshots/15130806/media/40cd28b0e72d79997ba04e3350084114.png?compress=1&resize=1600x1200"
-            title="Day 4"
-            description="10 minutes"
-          />
+          <TouchableOpacity
+            onPress={() => navigation.navigate("Basics", { index: 3 })}
+          >
+            <CourseScreenComponent
+              photo="https://cdn.dribbble.com/users/1787323/screenshots/15130806/media/40cd28b0e72d79997ba04e3350084114.png?compress=1&resize=1600x1200"
+              title="Day 4"
+              description="10 minutes"
+            />
+          </TouchableOpacity>
           <Spacer position="top" size="large" />
-          <CourseScreenComponent
-            photo="https://cdn.dribbble.com/users/1787323/screenshots/15130806/media/27d32229349af71929b92b994dd11981.png?compress=1&resize=1600x1200"
-            title="Day 5"
-            description="10 minutes"
-          />
+          <TouchableOpacity
+            onPress={() => navigation.navigate("Basics", { index: 4 })}
+          >
+            <CourseScreenComponent
+              photo="https://cdn.dribbble.com/users/1787323/screenshots/15130806/media/27d32229349af71929b92b994dd11981.png?compress=1&resize=1600x1200"
+              title="Day 5"
+              description="10 minutes"
+            />
+          </TouchableOpacity>
         </View>
       </ScrollView>
     </>

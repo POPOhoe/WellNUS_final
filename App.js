@@ -12,7 +12,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { SafeArea } from "./src/components/utility/Safe-Area";
 
 import { MeditationScreenPart2 } from "./src/screens/MeditationScreenPart2";
-import { Player2 } from "./Player2";
+import { Player2 } from "./Players/Player2";
 import { Player } from "./src/components/Player";
 
 import { CourseScreen } from "./src/components/CourseScreen";
@@ -30,7 +30,7 @@ import {
 
 const Tab = createBottomTabNavigator();
 
-const ForumScreen = () => <Text>Soon to be implemented in milestone 3! 🙂</Text>;
+const ForumScreen = () => <Text>Soon to be implemented!</Text>;
 const MoodTrackingScreen = () => <Text>Mood tracking</Text>;
 
 import {
@@ -103,7 +103,7 @@ export default function App() {
             >
               <Tab.Screen name="Home" component={Homescreen} />
               <Tab.Screen name="Meditation" component={MeditationScreenPart2} />
-              <Tab.Screen name="Forum" component={ForumScreen} />
+              <Tab.Screen name="Forum" component={Player2} />
               <Tab.Screen name="MoodTracking" component={MoodTracker} />
             </Tab.Navigator>
           </NavigationContainer>

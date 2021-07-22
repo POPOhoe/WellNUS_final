@@ -25,9 +25,9 @@ export const MeditationScreen = ({ navigation }) => {
           <Spacer location="top" size="large" />
           <MeditationScreenComponent2
             photo="https://cdn.dribbble.com/users/1787323/screenshots/10870264/media/7b391dbdbc06f4a188dfd5d0a1914a9d.png?compress=1&resize=1600x1200"
-            title="Depression"
+            title="Stressed Out? "
             description="5 mins"
-            onPress={() => navigation.navigate("Player")}
+            onPress={() => navigation.navigate("Stressed")}
           />
           <Spacer location="top" size="large" />
           <Text variant="label">Explore Meditation</Text>
@@ -43,35 +43,35 @@ export const MeditationScreen = ({ navigation }) => {
             photo="https://cdn.dribbble.com/users/1787323/screenshots/15456036/media/af945d5a61cc8dfff32aee9afa99434f.png"
             title="Managing Anxiety"
             description="say no to anxiety!"
-            onPress={() => console.log("hello")}
+            onPress={() => navigation.navigate("Managing Anxiety")}
           />
           <Spacer location="top" size="large" />
           <MeditationScreenComponent3
             photo="https://cdn.dribbble.com/users/1787323/screenshots/15491880/media/6767bd6d559d452760e48a298b73e6f0.png?compress=1&resize=1600x1200"
             title="Overcoming Stress"
             description="Be at peace with your situatiion"
-            onPress={() => console.log("hello")}
+            onPress={() => navigation.navigate("Stress")}
           />
           <Spacer location="top" size="large" />
           <MeditationScreenComponent3
             photo="https://cdn.dribbble.com/users/1787323/screenshots/15445565/media/af6443b55617bd002e23d4b0bcc1dc36.png"
             title="Depression"
             description="find the mindfulness you need"
-            onPress={() => console.log("hello")}
+            onPress={() => navigation.navigate("DepressionCourse")}
           />
           <Spacer location="top" size="large" />
           <MeditationScreenComponent3
             photo="https://cdn.dribbble.com/users/1787323/screenshots/13413600/media/94b400acc6fefd50996098feba0b6aa3.png?compress=1&resize=1600x1200"
             title="Productivity"
             description="boost your mental energy!"
-            onPress={() => console.log("hello")}
+            onPress={() => navigation.navigate("ProductivityCourse")}
           />
           <Spacer location="top" size="large" />
           <MeditationScreenComponent3
             photo="https://cdn.dribbble.com/users/1787323/screenshots/14331984/media/63c32e49add4e0cd14de47172e67fed0.png?compress=1&resize=1600x1200"
             title="Sleep"
             description="Add meditation to your sleep routine."
-            onPress={() => console.log("hello")}
+            onPress={() => navigation.navigate("SleepCourse")}
           />
           <Spacer location="top" size="large" />
         </CardArea>
