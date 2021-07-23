@@ -1,18 +1,20 @@
-import * as firebase from "firebase";
+import * as firebase from 'firebase';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDs-KO6tliYucnKpBhuBK80alHhwEPwBkY",
-  authDomain: "wellnus-8a6dc.firebaseapp.com",
-  databaseURL:
-    "https://wellnus-f9ef0-default-rtdb.asia-southeast1.firebasedatabase.app/",
-  projectId: "wellnus-8a6dc",
-  storageBucket: "wellnus-8a6dc.appspot.com",
-  messagingSenderId: "15146717621",
-  appId: "1:15146717621:web:57c6e0cdad0615bf3bc9fc",
+    apiKey: "AIzaSyD6PTHb3MO0jAOJ-4vbEyvMOVHKbQG81ME",
+    authDomain: "wellnus-f9ef0.firebaseapp.com",
+    databaseURL: 'https://wellnus-f9ef0-default-rtdb.asia-southeast1.firebasedatabase.app',
+    projectId: "wellnus-f9ef0",
+    storageBucket: "wellnus-f9ef0.appspot.com",
+    messagingSenderId: "190429536004",
+    appId: "1:190429536004:web:30a21f6bd898cc62663a51",
+    measurementId: "G-FLWKVX44VX"
 };
 
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
+if(!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig)
 }
+
+
 
 export default firebase;

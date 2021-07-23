@@ -1,115 +1,162 @@
-import { StatusBar as ExpoStatusBar } from "expo-status-bar";
-import React from "react";
-import { ThemeProvider } from "styled-components";
-import { Homescreen } from "./src/screens/Homescreen";
-import { theme } from "./src/infrastructure/theme";
+import React, { useState, useEffect, useMemo, useReducer } from 'react';
+import { View, ActivityIndicator, StatusBar } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import { AuthContext } from './src/components/Context';
+import { 
+  NavigationContainer, 
+  DarkTheme as NavigationDarkTheme, 
+  DefaultTheme as NavigationDefaultTheme
+} from '@react-navigation/native';
+import { 
+  Provider as PaperProvider, 
+  DarkTheme as PaperDarkTheme, 
+  DefaultTheme as PaperDefaultTheme
+} from 'react-native-paper'
+import firebase from './firebase/fire';
+import * as Font from 'expo-font'
+import moment from 'moment';
+import LoginStack from './stacks/LoginStack'
+import AppStack from './stacks/AppStack';
+import { LogBox } from 'react-native';
 
-import { View, Text } from "react-native";
+const App = () => {
 
-import { NavigationContainer } from "@react-navigation/native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+  const [isLoading, setIsLoading] = useState(true)
 
-import { SafeArea } from "./src/components/utility/Safe-Area";
+  const [userToken, setUserToken] = useState('')
 
-import { MeditationScreenPart2 } from "./src/screens/MeditationScreenPart2";
-import { Player2 } from "./Players/Player2";
-import { Player } from "./src/components/Player";
+  const [error, setError] = useState(null)
 
-import { CourseScreen } from "./src/components/CourseScreen";
-import { OnboardingScreen } from "./src/screens/OnBoardingScreen";
+  const [darkTheme, setDarkTheme] = useState(false)
 
-import LoginScreen from "./src/screens/LoginScreen";
-import MoodTracker from "./src/screens/MoodTracker";
+  const [date, setDate] = useState(moment())
 
-import {
-  Ionicons,
-  MaterialCommunityIcons,
-  MaterialIcons,
-  SimpleLineIcons,
-} from "@expo/vector-icons";
+  const authContext = useMemo(() => ({
+    setUser: (username) => {
+      setUserToken(username)
+    },
+    signOut: async() => {
+      await AsyncStorage.removeItem('userToken')
+      setUserToken('')
+    },
+    // signUp: async (email, password) => {
+    //   try {
+    //     setError('')
+    //     await firebase.auth().createUserWithEmailAndPassword(email, password)
+    //     await AsyncStorage.setItem('userToken', 'loggedIn')
+    //     setUserToken('email')
+    //   } catch (err) {
+    //     setError(err.message)
+    //   }
+    // },
+    displayError: () => {
+      if (error) {
+        console.log('theres an error')
+        return JSON.stringify(error)
+      } else {
+        console.log('theres no error')
+        return null
+      }      
+    },
+    toggleTheme: () => {
+      
+      setDarkTheme(!darkTheme)  
+      if (darkTheme) {
+        console.log('yes')
+      } else {
+        console.log('no')
+      }
+    },
+    selectDate: (date) => {
+      setDate(moment(date))
+    },
+    returnDate: () => {
+      return {date}
+    },
+    getUsername: () => {
 
-const Tab = createBottomTabNavigator();
+      return (
+        userToken
+      )
+    }
+    
+  }))
 
-const ForumScreen = () => <Text>Soon to be implemented!</Text>;
-const MoodTrackingScreen = () => <Text>Mood tracking</Text>;
-
-import {
-  useFonts as useSans,
-  OpenSans_400Regular,
-  OpenSans_600SemiBold,
-  OpenSans_300Light,
-} from "@expo-google-fonts/open-sans";
-import { useFonts as useLato, Lato_400Regular } from "@expo-google-fonts/lato";
-
-export default function App() {
-  const [OpenSansLoaded] = useSans({
-    OpenSans_400Regular,
-    OpenSans_600SemiBold,
-    OpenSans_300Light,
-  });
-
-  const [LatoLoaded] = useLato({
-    Lato_400Regular,
-  });
-
-  if (!OpenSansLoaded || !LatoLoaded) {
-    return null;
+  const load = async() => {
+    try {
+      const token = await AsyncStorage.getItem('userToken')
+      if (token !== null) {
+        setUserToken(token)
+      }
+    } catch (err) {
+      setError(err.message)
+    }
   }
 
-  return (
-    <>
-      <ThemeProvider theme={theme}>
-        <SafeArea>
-          <NavigationContainer>
-            <Tab.Navigator
-              style={{ innerHeight: 1000 }}
-              screenOptions={({ route }) => ({
-                tabBarIcon: ({ focused, color, size }) => {
-                  let iconName;
+  const getFonts = async() =>{ 
+    return (
+      await Font.loadAsync({
+        'RobotoSlab': require('./assets/fonts/RobotoSlab-VariableFont_wght.ttf')
+      })
+    )
+  }
 
-                  if (route.name === "Home") {
-                    iconName = "home";
-                  } else if (route.name === "MoodTracking") {
-                    iconName = "notebook";
-                    return (
-                      <MaterialCommunityIcons
-                        name="notebook"
-                        size={size}
-                        color={color}
-                      />
-                    );
-                  } else if (route.name === "Meditation") {
-                    iconName = "meditation";
-                    return (
-                      <Ionicons name="heart-circle" size={size} color={color} />
-                    );
-                  } else if (route.name === "Forum") {
-                    iconName = "forum-outlined";
-                    return (
-                      <MaterialCommunityIcons
-                        name="forum"
-                        size={size}
-                        color={color}
-                      />
-                    );
-                  }
-                  return <Ionicons name={iconName} size={size} color={color} />;
-                },
-              })}
-              tabBarOptions={{
-                activeTintColor: "#03A89E",
-                inactiveTintColor: "gray",
-              }}
-            >
-              <Tab.Screen name="Home" component={Homescreen} />
-              <Tab.Screen name="Meditation" component={MeditationScreenPart2} />
-              <Tab.Screen name="Forum" component={Player2} />
-              <Tab.Screen name="MoodTracking" component={MoodTracker} />
-            </Tab.Navigator>
-          </NavigationContainer>
-        </SafeArea>
-      </ThemeProvider>
-      <ExpoStatusBar style="auto" />
-    </>
-  );
+  useEffect(() => {
+    load()
+    getFonts()
+    setTimeout(() => { setIsLoading(false) }, 1000)
+  }, [])
+
+  if (isLoading) {
+    return (
+      <View style = {{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <ActivityIndicator size = 'large' color = 'black'/>
+      </View>
+    )
+  }
+
+  const customDefaultTheme = {
+    ...NavigationDefaultTheme, 
+    ...PaperDefaultTheme,
+    colors: {
+      ...NavigationDefaultTheme.colors,
+      ...PaperDefaultTheme.colors,
+      backgroud: '#ffffff',
+      text: '#333333'
+    }
+  }
+
+  const customDarkTheme = {
+    ...NavigationDarkTheme, 
+    ...PaperDarkTheme,
+    colors: {
+      ...NavigationDarkTheme.colors,
+      ...PaperDarkTheme.colors,
+      backgroud: '#333333',
+      text: '#ffffff'
+    }
+  }
+  
+  const theme = darkTheme ? customDarkTheme : customDefaultTheme
+  
+  LogBox.ignoreAllLogs()
+
+  return (
+    <PaperProvider theme = {theme}>    
+      <StatusBar hidden = {true}/>
+      <AuthContext.Provider value = {authContext}>
+        <NavigationContainer theme = {theme}>
+          {userToken ?
+            <AppStack /> :
+            <LoginStack />
+          }
+        </NavigationContainer>
+      </AuthContext.Provider>
+    </PaperProvider>
+     
+  )
 }
+
+export default App
+
+
