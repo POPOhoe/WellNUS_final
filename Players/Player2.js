@@ -2,11 +2,12 @@ import React from "react";
 import {
   Dimensions,
   Image,
-  Slider,
   StyleSheet,
+  Slider,
   TouchableHighlight,
   View,
 } from "react-native";
+
 import { Asset } from "expo-asset";
 import { Audio, Video } from "expo-av";
 import * as Font from "expo-font";
@@ -158,7 +159,7 @@ export class Player2 extends React.Component {
       rate: 1.0,
       videoWidth: DEVICE_WIDTH,
       videoHeight: VIDEO_CONTAINER_HEIGHT,
-      poster: false,
+      // poster: false,
       useNativeControls: false,
       fullscreen: false,
       throughEarpiece: false,
@@ -181,6 +182,13 @@ export class Player2 extends React.Component {
     })();
   }
 
+  componentWillUnmount() {
+    if (this.playbackInstance != null) {
+      this.playbackInstance.unloadAsync();
+      this.playbackInstance = null;
+    }
+  }
+
   StartingTrack(number) {
     this.index = number;
   }
@@ -188,7 +196,7 @@ export class Player2 extends React.Component {
   async _loadNewPlaybackInstance(playing) {
     if (this.playbackInstance != null) {
       await this.playbackInstance.unloadAsync();
-      // this.playbackInstance.setOnPlaybackStatusUpdate(null);
+      this.playbackInstance.setOnPlaybackStatusUpdate(null);
       this.playbackInstance = null;
     }
 
@@ -209,11 +217,11 @@ export class Player2 extends React.Component {
       this.playbackInstance = this._video;
       const status = await this._video.getStatusAsync();
     } else {
-      const { sound, status } = await Audio.Sound.createAsync(
+      const { sound } = await Audio.Sound.createAsync(
         PLAYLIST[this.index].uri,
         // source,
-        initialStatus,
-        this._onPlaybackStatusUpdate
+        initialStatus
+        // this._onPlaybackStatusUpdate
       );
       this.playbackInstance = sound;
     }
@@ -245,30 +253,30 @@ export class Player2 extends React.Component {
     }
   }
 
-  _onPlaybackStatusUpdate = (status) => {
-    if (status.isLoaded) {
-      this.setState({
-        playbackInstancePosition: status.positionMillis,
-        playbackInstanceDuration: status.durationMillis,
-        shouldPlay: status.shouldPlay,
-        isPlaying: status.isPlaying,
-        isBuffering: status.isBuffering,
-        rate: status.rate,
-        muted: status.isMuted,
-        volume: status.volume,
-        loopingType: status.isLooping ? LOOPING_TYPE_ONE : LOOPING_TYPE_ALL,
-        shouldCorrectPitch: status.shouldCorrectPitch,
-      });
-      if (status.didJustFinish && !status.isLooping) {
-        this._advanceIndex(true);
-        this._updatePlaybackInstanceForIndex(true);
-      }
-    } else {
-      if (status.error) {
-        console.log(`FATAL PLAYER ERROR: ${status.error}`);
-      }
-    }
-  };
+  // _onPlaybackStatusUpdate = (status) => {
+  //   if (status.isLoaded) {
+  //     this.setState({
+  //       playbackInstancePosition: status.positionMillis,
+  //       playbackInstanceDuration: status.durationMillis,
+  //       shouldPlay: status.shouldPlay,
+  //       isPlaying: status.isPlaying,
+  //       isBuffering: status.isBuffering,
+  //       rate: status.rate,
+  //       muted: status.isMuted,
+  //       volume: status.volume,
+  //       loopingType: status.isLooping ? LOOPING_TYPE_ONE : LOOPING_TYPE_ALL,
+  //       shouldCorrectPitch: status.shouldCorrectPitch,
+  //     });
+  //     if (status.didJustFinish && !status.isLooping) {
+  //       this._advanceIndex(true);
+  //       this._updatePlaybackInstanceForIndex(true);
+  //     }
+  //   } else {
+  //     if (status.error) {
+  //       console.log(`FATAL PLAYER ERROR: ${status.error}`);
+  //     }
+  //   }
+  // };
 
   _onLoadStart = () => {
     console.log("ON LOAD START");
@@ -280,25 +288,6 @@ export class Player2 extends React.Component {
 
   _onError = (error) => {
     console.log(`ON ERROR : ${error}`);
-  };
-
-  _onReadyForDisplay = (event) => {
-    const widestHeight =
-      (DEVICE_WIDTH * event.naturalSize.height) / event.naturalSize.width;
-    if (widestHeight > VIDEO_CONTAINER_HEIGHT) {
-      this.setState({
-        videoWidth:
-          (VIDEO_CONTAINER_HEIGHT * event.naturalSize.width) /
-          event.naturalSize.height,
-        videoHeight: VIDEO_CONTAINER_HEIGHT,
-      });
-    } else {
-      this.setState({
-        videoWidth: DEVICE_WIDTH,
-        videoHeight:
-          (DEVICE_WIDTH * event.naturalSize.height) / event.naturalSize.width,
-      });
-    }
   };
 
   _onFullscreenUpdate = (event) => {
@@ -370,16 +359,6 @@ export class Player2 extends React.Component {
   _onVolumeSliderValueChange = (value) => {
     if (this.playbackInstance != null) {
       this.playbackInstance.setVolumeAsync(value);
-    }
-  };
-
-  _trySetRate = async (rate, shouldCorrectPitch) => {
-    if (this.playbackInstance != null) {
-      try {
-        await this.playbackInstance.setRateAsync(rate, shouldCorrectPitch);
-      } catch (error) {
-        // Rate changing could not be performed, possibly because the client's Android API is too old.
-      }
     }
   };
 
@@ -511,7 +490,6 @@ export class Player2 extends React.Component {
             onLoad={this._onLoad}
             onError={this._onError}
             onFullscreenUpdate={this._onFullscreenUpdate}
-            onReadyForDisplay={this._onReadyForDisplay}
             useNativeControls={this.state.useNativeControls}
           />
           <Image
