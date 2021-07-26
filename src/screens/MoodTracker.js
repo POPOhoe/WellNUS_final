@@ -17,8 +17,12 @@ import { Entypo } from "@expo/vector-icons";
 import Modal from "react-native-modal";
 import { Keyboard } from "react-native";
 import firebase from "./../../firebase/fire";
+import { AuthContext } from '../components/Context';
 
 const MoodTracker = () => {
+
+  const { getUsername } = useContext(AuthContext)
+
   const [items, setItems] = useState({});
 
   const [showCalendar, setShowCalendar] = useState(false);
@@ -36,12 +40,14 @@ const MoodTracker = () => {
 
   const [showLoading, setShowLoading] = useState(false);
 
+  const username = getUsername()
+
   useEffect(() => {
     const getData = () => {
       try {
         firebase
           .database()
-          .ref("entry")
+          .ref("entry/" + username)
           .on("value", (snapshot) => {
             const response = snapshot.val();
             if (response !== null) {
@@ -210,7 +216,7 @@ const MoodTracker = () => {
       try {
         firebase
           .database()
-          .ref("/entry/" + key)
+          .ref("/entry/" + username + '/' + key)
           .set({
             id: key,
             date: date,

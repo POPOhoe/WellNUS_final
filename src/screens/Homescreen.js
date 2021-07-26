@@ -42,7 +42,7 @@ export const Homescreen = () => {
             description="Seeking help is a sign of strength — not a weakness."
           />
           <Spacer position="top" size="large" />
-          <Text variant="label" style={{ paddingBottom: 16 }}>
+          {/* <Text variant="label" style={{ paddingBottom: 16 }}>
             How are you feeling today?
           </Text>
           <Button
@@ -67,7 +67,7 @@ export const Homescreen = () => {
             contentStyle={{ height: 50 }}
           >
             <Text>😕 Sad</Text>
-          </Button>
+          </Button> */}
           <Spacer position="top" size="large" />
 
           <Text variant="label" style={{ paddingBottom: 16 }}>

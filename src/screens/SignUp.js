@@ -66,16 +66,15 @@ const SignUp = ({navigation}) => {
                         if(key === val) {
                             console.log('im here')
                             invalid = true
-                            
                         } else {
-                            invalid = false
+                            console.log('OI')
                         }
                     });
                     
                 }
             });
     
-        
+
         if (val.length !== 0) {
             if (invalid) {
                 console.log('hello')
@@ -85,6 +84,7 @@ const SignUp = ({navigation}) => {
                     noUsername: false
                 })
             } else {
+                console.log('hello2')
                 setData({
                     ...data,
                     username: val,
@@ -93,6 +93,7 @@ const SignUp = ({navigation}) => {
                 })
             }
         } else {
+            console.log('hello3')
             setData({
                 ...data,
                 username: val, 
@@ -100,6 +101,7 @@ const SignUp = ({navigation}) => {
                 noUsername: true
             })
         }
+        console.log(data.checkUsername)
         
         
     }
@@ -154,27 +156,31 @@ const SignUp = ({navigation}) => {
             ...data, 
             error: null,
         })
+        setShowLoading(true)
         if (data.password !== null && data.email !== null && data.username !== null) {
             console.log('hi')
             if (data.password === data.confirmPassword) {
-                try {
+                setTimeout(async () => {
+                    try {
                     
-                    await firebase.auth().createUserWithEmailAndPassword(data.email, data.password)
-                    await AsyncStorage.setItem('userToken', data.username)
-                    await firebase
-                        .database()
-                        .ref("/users/" + data.username)
-                        .set({
-                            email: data.email
+                        await firebase.auth().createUserWithEmailAndPassword(data.email, data.password)
+                        await AsyncStorage.setItem('userToken', data.username)
+                        await firebase
+                            .database()
+                            .ref("/users/" + data.username)
+                            .set({
+                                email: data.email
+                            })
+                        setUser(data.username)
+                    } catch (err) {
+                        const errorMessage = err.message
+                        setData({
+                            ...data,
+                            error: errorMessage
                         })
-                    setUser(data.username)
-                } catch (err) {
-                    const errorMessage = err.message
-                    setData({
-                        ...data,
-                        error: errorMessage
-                    })
-                }
+                    }
+                }, 500);
+                
                 
             } else {
                 setData({
@@ -317,19 +323,30 @@ const SignUp = ({navigation}) => {
                 }
 
                 <View style = {styles.button}>
-                    <TouchableOpacity
-                        style = {styles.signIn}
-                        onPress = {() => {
-                            register()
-                        }}
-                    >
-                        <LinearGradient
-                            colors = {['#08d4c4', '#01ab9d']}
+                    {!data.checkUsername && !data.noUsername?
+                        <View style = {styles.signIn}>
+                            <LinearGradient
+                                colors = {['#a9a9a9', '#696969']}
+                                style = {styles.signIn}
+                            >
+                                <Text style = {[styles.textSign, {color: 'white'}]}>Sign Up</Text>
+                            </LinearGradient>
+                        </View> :
+                        <TouchableOpacity
                             style = {styles.signIn}
+                            onPress = {() => {
+                                register()
+                            }}
                         >
-                            <Text style = {[styles.textSign, {color: 'white'}]}>Sign Up</Text>
-                        </LinearGradient>
-                    </TouchableOpacity>
+                            <LinearGradient
+                                colors = {['#08d4c4', '#01ab9d']}
+                                style = {styles.signIn}
+                            >
+                                <Text style = {[styles.textSign, {color: 'white'}]}>Sign Up</Text>
+                            </LinearGradient>
+                        </TouchableOpacity>
+                    }
+                    
 
                     <TouchableOpacity
                         onPress = {() => navigation.navigate('Login')}

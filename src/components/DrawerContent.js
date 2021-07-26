@@ -61,7 +61,7 @@ const DrawerContent = (props) => {
                                 props.navigation.navigate('home')
                             }}
                         />
-                        <Drawer.Item
+                        {/* <Drawer.Item
                             icon = {({color, size}) => (
                                 <MaterialCommunityIcons 
                                     name="account-check-outline" 
@@ -86,7 +86,7 @@ const DrawerContent = (props) => {
                             onPress = {() => {
                                 props.navigation.navigate('Settings')
                             }}
-                        />
+                        /> */}
                     </Drawer.Section>
                     <Drawer.Section title = 'Preferences'>
                         <TouchableRipple onPress = {() => toggleTheme()} >
